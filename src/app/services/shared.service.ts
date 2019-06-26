@@ -114,14 +114,13 @@ export class SharedService {
     })
   }
 
+  /**
+   * Enviar SMS via API do SMS DEV.
+   * @param number número de telefone sem prefix de país. EX: 85996942049
+   * @param msg mensagem encoded
+   */
   sendSms(number: string, msg: string) {
     let url = 'http://api.smsdev.com.br/send?key=' + this.KEY_SMS_DEV + '&type=9&' + 'number=' + number + '&msg=' + msg;
-    // let body = {
-    //   key: this.KEY_SMS_DEV,
-    //   type: '9',
-    //   number: number,
-    //   msg: msg
-    // };
     return this.http.get(url)
       .pipe(map(res => res.json()))
   }

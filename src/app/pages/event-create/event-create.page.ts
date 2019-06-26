@@ -9,7 +9,6 @@ import { Contact } from '../../models/contact';
 import { Event } from '../../models/event';
 import { firestore } from 'firebase';
 import { InAppBrowser } from '@ionic-native/in-app-browser/ngx';
-import { Observable, of } from 'rxjs';
 import { removeSymbol } from '../../util/util';
 import { Room } from '../../models/room';
 import { SharedService } from '../../services/shared.service';
@@ -23,7 +22,7 @@ import { User } from '../../models/user';
 export class EventCreatePage implements OnInit {
 
   @Input() room: Room;
-  // @Input() contact: Contact;
+
   @Input() event: Event;
 
   //Somente dia [INPUT]
@@ -50,10 +49,6 @@ export class EventCreatePage implements OnInit {
   //Descrição
   description: string;
 
-  //Título
-  // title: string;
-
-
 
   constructor(public modalCtrl: ModalController, public toastCtrl: ToastController, private iab: InAppBrowser,
     public shared: SharedService, public alertCtrl: AlertController, public loadingCtrl: LoadingController) { }
@@ -76,6 +71,16 @@ export class EventCreatePage implements OnInit {
       this.eventStartHour = this.event.startTime.toISOString();
       this.eventEndHour = this.event.endTime.toISOString();
 
+      this.event.contact = this.shared.contacts.find((contact) => {
+        return contact.id == this.contactSelectedId;
+      })
+      console.log("Contato do evento: ", this.event.contact);
+
+      this.event.room = this.shared.rooms.find((room) => {
+        return room.id == this.event.room.id;
+      })
+      console.log("Ambiente do evento: ", this.event.room);
+
     }
 
   }
@@ -84,19 +89,14 @@ export class EventCreatePage implements OnInit {
     this.modalCtrl.dismiss();
   }
 
-  whatsapp() {
+  sendNotification(type: 'sms' | 'whatsapp') {
 
     this.isValidForm().then((res) => {
 
       //Formulário é válido
       if (res) {
         console.log("Chamar whatsapp:");
-        let contact = this.shared.contacts.find((contact) => {
-          return contact.id == this.contactSelectedId;
-        })
-        let room = this.shared.rooms.find((room) => {
-          return room.id == this.event.room.id;
-        })
+
 
         let hour: any = this.event.startTime_firestore.toDate().getHours();
         hour = ("0" + hour).slice(-2);
@@ -110,17 +110,31 @@ export class EventCreatePage implements OnInit {
         let year: any = this.event.startTime_firestore.toDate().getUTCFullYear();
         year = ("0" + year).slice(-2);
 
-        let msg = `Bom dia, ${contact.name}! Passando aqui pra lembrar que você tem uma reserva no Coworking Parquelândia no(a) ${room.name}, no dia ${day}/${month}/${year} às ${hour}:${minutes}! Esperamos por você!`;
-        let number = removeSymbol(contact.cellphone);
+        let msg = `Bom dia, ${this.event.contact.name}! Passando aqui pra lembrar que você tem uma reserva no Coworking Parquelândia no(a) ${this.event.room.name}, no dia ${day}/${month}/${year} às ${hour}:${minutes}! Esperamos por você!`;
+        let number = removeSymbol(this.event.contact.cellphone);
 
         msg = encodeURI(msg);
-        number = '55' + number;
+        let number_with_prefix_br = '55' + number;
 
         console.log("Mensagem a enviar: ", msg);
         console.log("Número a enviar: ", number);
 
-        let browser = this.iab.create(`https://wa.me/${number}?text=${msg}`);
-        browser.show();
+        if (type == 'whatsapp') {
+          let browser = this.iab.create(`https://wa.me/${number_with_prefix_br}?text=${msg}`);
+          browser.show();
+        }
+        else {
+          this.shared.sendSms(number, msg).subscribe(async (res) => {
+            console.log("SMS enviado com sucesso", res);
+            let toast = await this.toastCtrl.create({
+              message: 'SMS enviado com sucesso',
+              duration: 750
+            })
+            toast.present();
+          }, error => {
+            console.error("Ocorreu algum erro ao enviar SMS", error);
+          })
+        }
 
       }
 

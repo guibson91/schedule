@@ -1,6 +1,8 @@
 import { Collection } from 'src/app/firestore/collection';
 import { RelationshipField } from '../firestore/collection-relationship';
 import { firestore } from "firebase"
+import { Contact } from './contact';
+import { Room } from './room';
 
 export class Event extends Collection {
 
@@ -8,8 +10,8 @@ export class Event extends Collection {
 
     //Relacionamentos ONE
     user?: RelationshipField;
-    contact?: RelationshipField;
-    room?: RelationshipField;
+    contact?: RelationshipField & Contact;
+    room?: RelationshipField & Room;
 
     //Banco de Dados
     title?: string;

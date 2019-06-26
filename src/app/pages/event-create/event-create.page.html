@@ -1,21 +1,48 @@
-<header-app title="Novo Evento"></header-app>
+<header-app [title]="event ? 'Evento' : 'Novo Evento'"></header-app>
 
 <ion-content>
 
 
 
-    <ion-grid margin-top>
+    <ion-grid>
 
-        <h2 class="title-top" *ngIf="event">Clique no botão abaixo para enviar uma notificação no whatsapp do cliente</h2>
-        <ion-button *ngIf="event" margin-top margin-bottom (click)="whatsapp()" expand="block" class="button-option"
-            color="success" fill="outline">
-            Enviar Whatsapp</ion-button>
+        <div *ngIf="event && event.contact && event.room">
+            <h1>Informações do evento</h1>
+            <h2>Ambiente: <b>{{event.room.name}}</b></h2>
+            <h2>Contato: <b>{{event.contact.name}}</b></h2>
+            <h2 *ngIf="event.description">Descrição: <b>{{event.description | uppercase}}</b></h2>
+            <ion-row>
+                <ion-col>
+                    <h2>Dia: <b>{{eventDay | date:'dd/MMM'}}</b></h2>
+                </ion-col>
+                <ion-col>
+                    <h2>De: <b>{{eventStartHour | date:'HH:mm'}}</b></h2>
+                </ion-col>
+                <ion-col>
+                    <h2>Até: <b>{{eventEndHour | date:'HH:mm'}}</b></h2>
+                </ion-col>
+            </ion-row>
+
+            <h1>Notificações</h1>
+
+            <h2 class="title-top" *ngIf="event">Clique no botão abaixo para enviar uma notificação via whatsapp
+            </h2>
+            <ion-button *ngIf="event" margin-top margin-bottom (click)="sendNotification('whatsapp')" expand="block"
+                class="button-option" color="success" fill="outline">
+                Enviar Whatsapp</ion-button>
+
+            <h2 class="title-top" *ngIf="event">Clique no botão abaixo para enviar uma notificação via SMS
+            </h2>
+            <ion-button *ngIf="event" margin-top margin-bottom (click)="sendNotification('sms')" expand="block"
+                class="button-option" color="danger" fill="outline">
+                Enviar SMS</ion-button>
 
 
+        </div>
 
-        <h2 class="title">QUEM FARÁ PARTE DO EVENTO</h2>
+        <h2 class="title" *ngIf="!event">QUEM FARÁ PARTE DO EVENTO</h2>
         <!-- <h2 class="title" *ngIf="contact && !room">QUAL O AMBIENTE DO EVENTO</h2> -->
-        <ion-row>
+        <ion-row *ngIf="!event">
             <ion-col>
                 <ion-item lines="none" class="select" *ngIf="shared.contacts">
                     <ion-label>Cliente*</ion-label>
@@ -43,8 +70,8 @@
             </ion-col>
         </ion-row> -->
 
-        <h2 class="title">DESCRIÇÃO</h2>
-        <ion-row>
+        <h2 class="title" *ngIf="!event">DESCRIÇÃO</h2>
+        <ion-row *ngIf="!event">
             <ion-col>
                 <ion-item lines="none">
                     <ion-input [(ngModel)]="description">
@@ -53,8 +80,8 @@
             </ion-col>
         </ion-row>
 
-        <h2 class="title">DIA DO EVENTO*</h2>
-        <ion-row>
+        <h2 class="title" *ngIf="!event">DIA DO EVENTO*</h2>
+        <ion-row *ngIf="!event">
             <ion-col>
                 <ion-item lines="none">
                     <ionic-calendar-date-picker [date]="eventDay" (onSelect)="dateSelected($event)">
@@ -63,8 +90,8 @@
             </ion-col>
         </ion-row>
 
-        <h2 class="title" margin-top>O EVENTO OCUPARÁ O DIA TODO?</h2>
-        <ion-row>
+        <h2 class="title" margin-top *ngIf="!event">O EVENTO OCUPARÁ O DIA TODO?</h2>
+        <ion-row *ngIf="!event">
             <ion-col>
                 <ion-item lines="none">
                     <ion-label>Reservar para o dia inteiro</ion-label>
@@ -73,8 +100,8 @@
             </ion-col>
         </ion-row>
 
-        <h2 class="title" *ngIf="!allDay">HORÁRIO DO EVENTO</h2>
-        <ion-row *ngIf="!allDay">
+        <h2 class="title" *ngIf="!allDay && !event">HORÁRIO DO EVENTO</h2>
+        <ion-row *ngIf="!allDay && !event">
             <ion-col>
                 <ion-item lines="none">
                     <ion-label>Início</ion-label>
@@ -93,9 +120,9 @@
 
     </ion-grid>
 
-    <ion-button margin-bottom (click)="save()" expand="block" class="button-option">Salvar</ion-button>
-    <ion-button margin-bottom (click)="cancel()" expand="block" color="medium" fill="clear" class="button-option">
-        Cancelar</ion-button>
+    <ion-button margin-bottom (click)="save()" expand="block" class="button-option" *ngIf="!event">Salvar</ion-button>
+    <ion-button (click)="cancel()" expand="block" color="medium" fill="clear" class="button-option">
+        {{ event ? 'Voltar' : 'Cancelar'}}</ion-button>
     <ion-button margin-bottom (click)="delete()" expand="block" color="danger" fill="clear" *ngIf="event">Excluir
     </ion-button>
 
