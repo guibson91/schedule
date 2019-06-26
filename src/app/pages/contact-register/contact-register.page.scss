@@ -1,0 +1,47 @@
+.error {
+    font-size: 0.8em;
+    margin-left: 1.5em;
+    margin-bottom: 4px;
+    margin-top: 3px;
+    color: red;
+}
+
+
+h2 {
+    color: var(--ion-color-text);
+    font-size: 0.9em;
+    margin-left: 1.3em;
+    margin-top: 0.6em;
+}
+
+ion-item {
+    margin: 0px !important;
+    padding: 0px !important;
+}
+
+ion-row {
+    margin-top: -.6em;
+}
+
+ion-col {
+    padding: 0px !important;
+}
+
+ion-input {
+    text-transform: uppercase;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    margin-top: 5px;
+    color: var(--ion-color-text)!important;
+}
+
+ion-input.center-input {
+    text-align: center;
+}
+
+ion-button {
+    padding: 2px;
+    padding-left: 4em;
+    padding-right: 4em;
+    margin-top: 1em;
+}

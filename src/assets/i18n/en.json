@@ -1,0 +1,15 @@
+{
+    "ALREADY_HAVE_ACCOUNT": "I already have an account",
+    "CREATE_ACCOUNT": "Create account",
+    "EMAIL": "E-mail",
+    "INVALID_EMAIL": "Invalid email",
+    "LOGIN_BUTTON": "Login",
+    "PASSWORD": "Password",
+    "RANDOM_ERROR": "An error occurred. Please contact support.",
+    "REGISTER_BUTTON": "Register",
+    "USER_ALREADY_EXISTS": "User already exists",
+    "USER_DISABLED": "User disabled",
+    "USER_NOT_FOUND": "User not found",
+    "WEAK_PASSWORD": "Weak password.",
+    "WRONG_PASSWORD": "Wrong password"
+}

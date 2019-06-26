@@ -1,0 +1,102 @@
+<header-app title="Novo Evento"></header-app>
+
+<ion-content>
+
+
+
+    <ion-grid margin-top>
+
+        <h2 class="title-top" *ngIf="event">Clique no botão abaixo para enviar uma notificação no whatsapp do cliente</h2>
+        <ion-button *ngIf="event" margin-top margin-bottom (click)="whatsapp()" expand="block" class="button-option"
+            color="success" fill="outline">
+            Enviar Whatsapp</ion-button>
+
+
+
+        <h2 class="title">QUEM FARÁ PARTE DO EVENTO</h2>
+        <!-- <h2 class="title" *ngIf="contact && !room">QUAL O AMBIENTE DO EVENTO</h2> -->
+        <ion-row>
+            <ion-col>
+                <ion-item lines="none" class="select" *ngIf="shared.contacts">
+                    <ion-label>Cliente*</ion-label>
+                    <ion-select placeholder="Selecione um cliente" [(ngModel)]="contactSelectedId">
+                        <ion-select-option [value]="contact.id" *ngFor="let contact of shared.contacts">{{contact.name}}
+                        </ion-select-option>
+                    </ion-select>
+                </ion-item>
+                <!-- <ion-item lines="none" class="select" *ngIf="contact && !room">
+                    <ion-label>Ambiente*</ion-label>
+                    <ion-select placeholder="Selecione um ambiente" [(ngModel)]="roomSelectedId">
+                        <ion-select-option [value]="room.id" *ngFor="let room of shared.rooms">{{room.name}}
+                        </ion-select-option>
+                    </ion-select>
+                </ion-item> -->
+            </ion-col>
+        </ion-row>
+
+        <!-- <h2 class="title">TÍTULO*</h2>
+        <ion-row>
+            <ion-col>
+                <ion-item lines="none">
+                    <ion-input placeholder="Coach empresarial" [(ngModel)]="title"></ion-input>
+                </ion-item>
+            </ion-col>
+        </ion-row> -->
+
+        <h2 class="title">DESCRIÇÃO</h2>
+        <ion-row>
+            <ion-col>
+                <ion-item lines="none">
+                    <ion-input [(ngModel)]="description">
+                    </ion-input>
+                </ion-item>
+            </ion-col>
+        </ion-row>
+
+        <h2 class="title">DIA DO EVENTO*</h2>
+        <ion-row>
+            <ion-col>
+                <ion-item lines="none">
+                    <ionic-calendar-date-picker [date]="eventDay" (onSelect)="dateSelected($event)">
+                    </ionic-calendar-date-picker>
+                </ion-item>
+            </ion-col>
+        </ion-row>
+
+        <h2 class="title" margin-top>O EVENTO OCUPARÁ O DIA TODO?</h2>
+        <ion-row>
+            <ion-col>
+                <ion-item lines="none">
+                    <ion-label>Reservar para o dia inteiro</ion-label>
+                    <ion-checkbox [(ngModel)]="allDay"></ion-checkbox>
+                </ion-item>
+            </ion-col>
+        </ion-row>
+
+        <h2 class="title" *ngIf="!allDay">HORÁRIO DO EVENTO</h2>
+        <ion-row *ngIf="!allDay">
+            <ion-col>
+                <ion-item lines="none">
+                    <ion-label>Início</ion-label>
+                    <ion-datetime displayFormat="HH:mm" pickerFormat="HH:mm" minuteValues="0,30"
+                        [(ngModel)]="eventStartHour"></ion-datetime>
+                </ion-item>
+            </ion-col>
+            <ion-col>
+                <ion-item lines="none">
+                    <ion-label>Fim</ion-label>
+                    <ion-datetime displayFormat="HH:mm" pickerFormat="HH:mm" minuteValues="0,30"
+                        [(ngModel)]="eventEndHour"></ion-datetime>
+                </ion-item>
+            </ion-col>
+        </ion-row>
+
+    </ion-grid>
+
+    <ion-button margin-bottom (click)="save()" expand="block" class="button-option">Salvar</ion-button>
+    <ion-button margin-bottom (click)="cancel()" expand="block" color="medium" fill="clear" class="button-option">
+        Cancelar</ion-button>
+    <ion-button margin-bottom (click)="delete()" expand="block" color="danger" fill="clear" *ngIf="event">Excluir
+    </ion-button>
+
+</ion-content>

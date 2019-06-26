@@ -1,0 +1,22 @@
+<ion-content>
+
+  <img src="./../../../assets/images/logo.png" class="logo">
+
+  <div class="form">
+    <ion-item>
+      <ion-label position="stacked">EMAIL:</ion-label>
+      <ion-input [(ngModel)]="email"></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label position="stacked">SENHA:</ion-label>
+      <ion-input type="password" [(ngModel)]="password"></ion-input>
+    </ion-item>
+
+    <ion-button size="small" class="request-button" (click)="doLogin()">
+      ENTRAR
+    </ion-button>
+  </div>
+
+
+</ion-content>

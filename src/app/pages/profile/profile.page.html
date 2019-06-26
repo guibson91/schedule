@@ -1,0 +1,28 @@
+<header-app [title]="'Perfil'"></header-app>
+
+<ion-content padding>
+
+  <div class="personal" *ngIf="shared.user">
+    <h1>Dados Pessoais</h1>
+
+    <p>Nome: <b>{{shared.user.name}}</b></p>
+    <p>Email: <b>{{shared.user.email}}</b> </p>
+  </div>
+
+  <div *ngIf="shared.contacts || shared.rooms">
+    <h1>Informações</h1>
+
+    <p *ngIf="shared.contacts">Você possui <b>{{shared.contacts.length}}</b> contatos registrados</p>
+    <p *ngIf="shared.rooms">Você possui <b>{{shared.rooms.length}}</b> ambientes registrados</p>
+  </div>
+
+  <div>
+    <h1>Novidades</h1>
+
+    <p *ngIf="shared.info">{{shared.info.text}}</p>
+    <p *ngIf="!shared.info">Em breve teremos novidades..</p>
+  </div>
+
+  <ion-button color="danger" (click)="logout()" fill="clear">Sair</ion-button>
+
+</ion-content>

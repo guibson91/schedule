@@ -1,0 +1,25 @@
+<header-app title="Registar Ambiente"></header-app>
+
+<ion-content>
+
+    <form [formGroup]="form" margin-top>
+        <ion-grid>
+            <h2 class="title">NOME DO AMBIENTE</h2>
+            <ion-row>
+                <ion-col>
+                    <ion-item lines="none">
+                        <ion-input placeholder="SALA DE REUNIÃO 02" formControlName="name"></ion-input>
+                    </ion-item>
+                    <p class="error" *ngIf="!form.controls.name.valid && showError">
+                        Obrigatório</p>
+                </ion-col>
+            </ion-row>
+        </ion-grid>
+    </form>
+
+    <ion-button margin-bottom (click)="save()" expand="block">Salvar</ion-button>
+    <ion-button margin-bottom (click)="cancel()" expand="block" color="medium" fill="clear">Cancelar</ion-button>
+    <ion-button margin-bottom (click)="delete()" expand="block" color="danger" fill="clear" *ngIf="room">Excluir
+    </ion-button>
+
+</ion-content>

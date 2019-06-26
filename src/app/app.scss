@@ -1,6 +1,76 @@
 // App Styles
 // ----------------------------------------------------------------------------
-// Put style rules here that you want to apply to the entire application. These 
-// styles are for the entire app and not just one component. Additionally, this 
-// file can hold Sass mixins, functions, and placeholder classes to be imported 
-// and used throughout the application.
+
+@import url('https://fonts.googleapis.com/css?family=Montserrat:300,400,500,600,700');
+
+html,body,h1,h2,h3,h4,h5,h6,p,span,div {
+    font-family: 'Montserrat', sans-serif;
+}
+form,ion-item,.item-inner,ion-button,label {
+    font-family: 'Montserrat', sans-serif;
+}
+
+//Centralizar elemento horizontalmente e verticalmente
+.center {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translateX(-50%) translateY(-50%);
+}
+
+ion-grid {
+    font-size: 0.9em;
+}
+
+input {
+    margin-left: 0.5em !important;
+    font-size: 0.9em !important;
+    font-weight: 300 !important;
+}
+
+//Remover destaques de borda nos ion-items (válido, inválido e foco)
+ion-item {
+    --highlight-color-valid: transparent;
+    --highlight-color-invalid: transparent;
+    --highlight-color-focused: var(--ion-color-light);
+}
+
+//	-------------------------------------------------
+//	LOADING GLOBAL
+//	--------------------------------------------------
+
+ion-backdrop {
+    opacity: 0.35!important;
+    background: rgba(0,0,0,0)!important;
+    background-color: rgba(0,0,0,.5)!important;
+}
+
+.loading-wrapper {
+    margin:0!important;
+    padding:0!important;
+    max-width:64px!important;
+    width:64px!important;
+    height:64px!important;
+    border-radius:100%!important;
+    background: var(--ion-color-light);
+}
+
+ion-spinner {
+    margin:0!important;
+    margin-left:5px!important;
+    margin-top:3px!important;
+    width:54px!important;
+    height:54px!important;
+}
+
+.loading-spinner .spinner-crescent circle {
+    stroke-dasharray: 150px;
+    stroke-dashoffset: 50px;
+    stroke: var(--ion-color-primary);
+}
+
+.spinner-crescent circle {
+    stroke-width: 3px!important;
+    stroke: var(--ion-color-primary);
+    fill: transparent!important; 
+}

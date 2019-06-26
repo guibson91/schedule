@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ChangeDetectorRef } from '@angular/core';
 
 @Component({
   selector: 'app-tabs',
@@ -7,6 +7,10 @@ import { Component } from '@angular/core';
 })
 export class TabsPage {
 
-  constructor() {}
+  constructor(public ref: ChangeDetectorRef) { }
+
+  change() {
+    this.ref.detectChanges();
+  }
 
 }

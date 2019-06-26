@@ -1,0 +1,11 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-title *ngIf="title">{{title}}</ion-title>
+    <ion-buttons slot="end" *ngIf="showToday">
+      <ion-button (click)="updateToday()">
+        <ion-icon name="alarm"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+
+</ion-header>

@@ -1,0 +1,47 @@
+<header-app title="Clientes"></header-app>
+
+<ion-content>
+
+    <div *ngIf="!shared.contacts || shared.contacts.length <= 0" class="alert-empty" padding>
+
+        Você ainda não tem contatos cadastrados.
+
+    </div>
+
+    <ion-list *ngIf="shared.contacts && shared.contacts.length > 0">
+
+        <ion-item *ngFor="let contact of shared.contacts" lines="none">
+            <nano-thumb class="profile-img" [round]="true" [src]="contact.image" item-start>
+            </nano-thumb>
+            <div class="start">
+                <h1>{{contact.name | uppercase}}</h1>
+                <!-- <ion-button (click)="openSchedule(contact)" fill="clear">
+                    <ion-icon slot="start" name="call"></ion-icon>
+                    {{contact.cellphone}}
+                </ion-button> -->
+                <div class="buttons">
+                    <ion-button (click)="edit(contact)" fill="outline">
+                        <ion-icon name="create"></ion-icon>
+                        Editar
+                    </ion-button>
+                    <!-- <ion-button (click)="sendSms(contact)" fill="outline">
+                        <ion-icon name="send"></ion-icon>
+                        SMS
+                    </ion-button> -->
+                    <!-- <ion-button (click)="openSchedule(contact)" fill="outline">
+                        <ion-icon slot="start" name="calendar"></ion-icon>
+                        Agenda
+                    </ion-button> -->
+                </div>
+            </div>
+        </ion-item>
+
+    </ion-list>
+
+    <ion-fab vertical="bottom" horizontal="end" slot="fixed">
+        <ion-fab-button color="primary" (click)="add()">
+            <ion-icon name="add"></ion-icon>
+        </ion-fab-button>
+    </ion-fab>
+
+</ion-content>

@@ -1,5 +1,7 @@
 {
   "name": "schedule2",
-  "integrations": {},
+  "integrations": {
+    "cordova": {}
+  },
   "type": "angular"
 }

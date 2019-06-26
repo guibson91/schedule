@@ -8,42 +8,51 @@ const routes: Routes = [
     component: TabsPage,
     children: [
       {
-        path: 'tab1',
+        path: 'rooms',
         children: [
           {
             path: '',
-            loadChildren: '../tab1/tab1.module#Tab1PageModule'
+            loadChildren: '../pages/rooms/rooms.module#RoomsPageModule'
           }
         ]
       },
       {
-        path: 'tab2',
+        path: 'contacts',
         children: [
           {
             path: '',
-            loadChildren: '../tab2/tab2.module#Tab2PageModule'
+            loadChildren: '../pages/contacts/contacts.module#ContactsPageModule'
           }
         ]
       },
       {
-        path: 'tab3',
+        path: 'profile',
         children: [
           {
             path: '',
-            loadChildren: '../tab3/tab3.module#Tab3PageModule'
+            loadChildren: '../pages/profile/profile.module#ProfilePageModule'
+          }
+        ]
+      },
+      {
+        path: 'event-detail',
+        children: [
+          {
+            path: '',
+            loadChildren: '../pages/event-detail/event-detail.module#EventDetailPageModule'
           }
         ]
       },
       {
         path: '',
-        redirectTo: '/tabs/tab1',
+        redirectTo: '/tabs/rooms',
         pathMatch: 'full'
       }
     ]
   },
   {
     path: '',
-    redirectTo: '/tabs/tab1',
+    redirectTo: '/tabs/rooms',
     pathMatch: 'full'
   }
 ];
@@ -54,4 +63,4 @@ const routes: Routes = [
   ],
   exports: [RouterModule]
 })
-export class TabsPageRoutingModule {}
+export class TabsPageRoutingModule { }

@@ -1,0 +1,72 @@
+<header-app title="Registar Cliente"></header-app>
+
+<ion-content>
+
+  <form [formGroup]="form" margin-top>
+    <ion-grid>
+
+      <h2 class="title">NOME COMPLETO*</h2>
+      <ion-row>
+        <ion-col>
+          <ion-item lines="none">
+            <ion-input formControlName="name"></ion-input>
+          </ion-item>
+          <p class="error" *ngIf="!form.controls.name.valid && showError">
+            Obrigatório</p>
+        </ion-col>
+      </ion-row>
+
+      <h2 class="title">ÁREA DE ATUAÇÃO</h2>
+      <ion-row>
+        <ion-col>
+          <ion-item lines="none">
+            <ion-input formControlName="role"></ion-input>
+          </ion-item>
+        </ion-col>
+      </ion-row>
+
+      <h2 class="title">EMAIL*</h2>
+      <ion-row>
+        <ion-col>
+          <ion-item lines="none">
+            <ion-input placeholder="exemplo@gmail.com" type="email" formControlName="email"></ion-input>
+          </ion-item>
+          <p class="error" *ngIf="!form.controls.email.valid && showError">Email
+            inválido</p>
+        </ion-col>
+      </ion-row>
+
+      <h2 class="title">TELEFONE</h2>
+      <ion-row>
+        <ion-col>
+          <ion-item lines="none">
+            <ion-input name="phone" placeholder="(85) 3032-9863" type="tel" formControlName="phone"
+              [brmasker]="{form: form.get('phone'), phone: true}">
+            </ion-input>
+          </ion-item>
+          <p class="error" *ngIf="!form.controls.phone.valid && showError">
+            Telefone com DDD</p>
+        </ion-col>
+      </ion-row>
+
+      <h2 class="title">CELULAR*</h2>
+      <ion-row>
+        <ion-col>
+          <ion-item lines="none">
+            <ion-input name="cellphone" placeholder="(85) 99694-2058" type="tel" formControlName="cellphone"
+              [brmasker]="{form: form.get('cellphone'), phone: true}"></ion-input>
+          </ion-item>
+          <p class="error" *ngIf="!form.controls.cellphone.valid && showError">Telefone
+            com DDD</p>
+        </ion-col>
+      </ion-row>
+
+    </ion-grid>
+  </form>
+
+  <ion-button margin-bottom (click)="save()" expand="block">Salvar</ion-button>
+  <ion-button margin-bottom (click)="cancel()" expand="block" color="medium" fill="clear">Cancelar</ion-button>
+  <ion-button margin-bottom (click)="delete()" expand="block" color="danger" fill="clear" *ngIf="contact">Excluir
+  </ion-button>
+
+</ion-content>

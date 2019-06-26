@@ -1,0 +1,36 @@
+<header-app title="Agenda" [showToday]="true"></header-app>
+
+<ion-content>
+
+    <ion-segment [(ngModel)]="type" (ionChange)="segmentChanged()">
+        <ion-segment-button value="month">
+            <ion-label>Mês</ion-label>
+        </ion-segment-button>
+        <ion-segment-button value="week">
+            <ion-label>Semana</ion-label>
+        </ion-segment-button>
+        <ion-segment-button value="day">
+            <ion-label>Dia</ion-label>
+        </ion-segment-button>
+    </ion-segment>
+
+    <div class="container-title">
+        <h1><span *ngIf="type == 'day'">{{titleDate | date:'dd'}} / </span><span *ngIf="type != 'day'">{{titleDate | date:'MMMM'}}</span><span *ngIf="type == 'day'">{{titleDate | date:'MM'}}</span>
+            / {{titleDate | date:'yyyy'}}</h1>
+    </div>
+
+
+    <calendar [eventSource]="eventSource" [calendarMode]="calendar.mode" [currentDate]="calendar.currentDate"
+        locale="pt-BR" (onEventSelected)="onEventSelected($event)" startHour="8" endHour="23" step="30"
+        (onCurrentDateChanged)="onCurrentDateChanged()" timeInterval="30" startingDayWeek="1" allDayLabel="Dia todo"
+        noEventsLabel="Não há eventos nesse dia" formatDayHeader="EEE" formatDayTitle='MMMM dd, yyyy'
+        formatHourColumn="H:mm">
+    </calendar>
+
+    <ion-fab vertical="bottom" horizontal="end" slot="fixed">
+        <ion-fab-button color="primary" (click)="add()">
+            <ion-icon name="add"></ion-icon>
+        </ion-fab-button>
+    </ion-fab>
+
+</ion-content>
