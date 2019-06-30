@@ -5,14 +5,15 @@ import { BrowserModule } from '@angular/platform-browser';
 import { ComponentsModule } from './components/components.module';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { HttpModule } from '@angular/http';
+import { InAppBrowser } from '@ionic-native/in-app-browser/ngx';
 import { IonicModule, IonicRouteStrategy } from '@ionic/angular';
 import { LOCALE_ID, NgModule } from '@angular/core';
 import { PipesModule } from 'src/app/pipes/pipes.module';
 import { registerLocaleData } from '@angular/common';
 import { RouteReuseStrategy } from '@angular/router';
+import { SocialSharing } from '@ionic-native/social-sharing/ngx';
 import { SplashScreen } from '@ionic-native/splash-screen/ngx';
 import { StatusBar } from '@ionic-native/status-bar/ngx';
-import { InAppBrowser } from '@ionic-native/in-app-browser/ngx';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 // import { AndroidPermissions } from '@ionic-native/android-permissions/ngx';
@@ -47,6 +48,7 @@ export function HttpLoaderFactory(http: HttpClient) {
   providers: [
     StatusBar,
     SplashScreen,
+    SocialSharing,
     InAppBrowser,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
     { provide: LOCALE_ID, useValue: "pt-BR" }

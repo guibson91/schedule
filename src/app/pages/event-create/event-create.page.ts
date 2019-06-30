@@ -12,7 +12,9 @@ import { InAppBrowser } from '@ionic-native/in-app-browser/ngx';
 import { removeSymbol } from '../../util/util';
 import { Room } from '../../models/room';
 import { SharedService } from '../../services/shared.service';
+import { SocialSharing } from '@ionic-native/social-sharing/ngx';
 import { User } from '../../models/user';
+
 
 @Component({
   selector: 'app-event-create',
@@ -49,9 +51,9 @@ export class EventCreatePage implements OnInit {
   //Descrição
   description: string;
 
-
   constructor(public modalCtrl: ModalController, public toastCtrl: ToastController, private iab: InAppBrowser,
-    public shared: SharedService, public alertCtrl: AlertController, public loadingCtrl: LoadingController) { }
+    public shared: SharedService, public alertCtrl: AlertController, public loadingCtrl: LoadingController,
+    private socialSharing: SocialSharing) { }
 
   ngOnInit() {
 
@@ -89,7 +91,7 @@ export class EventCreatePage implements OnInit {
     this.modalCtrl.dismiss();
   }
 
-  sendNotification(type: 'sms' | 'whatsapp') {
+  sendNotification(type: 'sms' | 'whatsapp' | 'app') {
 
     this.isValidForm().then((res) => {
 
@@ -113,27 +115,39 @@ export class EventCreatePage implements OnInit {
         let msg = `Bom dia, ${this.event.contact.name}! Passando aqui pra lembrar que você tem uma reserva no Coworking Parquelândia no(a) ${this.event.room.name}, no dia ${day}/${month}/${year} às ${hour}:${minutes}! Esperamos por você!`;
         let number = removeSymbol(this.event.contact.cellphone);
 
-        msg = encodeURI(msg);
+        // msg = encodeURI(msg);
+
         let number_with_prefix_br = '55' + number;
 
         console.log("Mensagem a enviar: ", msg);
         console.log("Número a enviar: ", number);
 
         if (type == 'whatsapp') {
-          let browser = this.iab.create(`https://wa.me/${number_with_prefix_br}?text=${msg}`);
-          browser.show();
+          this.socialSharing.shareViaWhatsAppToReceiver(number_with_prefix_br, msg).then((res) => {
+            console.log("Deu certo o compartilhamento");
+          })
+            .catch((err) => {
+              console.error("Deu error o compartilhamento");
+            })
         }
         else {
-          this.shared.sendSms(number, msg).subscribe(async (res) => {
-            console.log("SMS enviado com sucesso", res);
-            let toast = await this.toastCtrl.create({
-              message: 'SMS enviado com sucesso',
-              duration: 750
-            })
-            toast.present();
-          }, error => {
-            console.error("Ocorreu algum erro ao enviar SMS", error);
+
+          this.socialSharing.shareViaSMS(msg, number_with_prefix_br).then((res) => {
+            console.log("Mensagem enviada com sucesso..");
+          }).catch((error) => {
+            console.log("erro ao enviar SMS", error);
           })
+
+          // this.shared.sendSms(number, msg).subscribe(async (res) => {
+          //   console.log("SMS enviado com sucesso", res);
+          //   let toast = await this.toastCtrl.create({
+          //     message: 'SMS enviado com sucesso',
+          //     duration: 1000
+          //   })
+          //   toast.present();
+          // }, error => {
+          //   console.error("Ocorreu algum erro ao enviar SMS", error);
+          // })
         }
 
       }
