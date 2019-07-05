@@ -1,6 +1,6 @@
 # MultiAgenda
 
-MultiAgenda é um sistema criado pela [Nanocode](http://www.nanocode.com.br) com objetivo de automatizar o controle de agendamentos (aulas, atendimentos, consultas, coachs) e notificar os integrantes dos eventos via WhatsApp e/ou SMS.
+MultiAgenda é um sistema criado em Ionic 4 e Firebase com objetivo de automatizar o controle de agendamentos (aulas, atendimentos, consultas, coachs) e notificar os integrantes dos eventos via WhatsApp e/ou SMS.
 
 ## Firebase
 
